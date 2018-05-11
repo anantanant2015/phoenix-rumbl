@@ -7,6 +7,7 @@ defmodule Rumbl.Router do
     plug(:fetch_flash)
     plug(:protect_from_forgery)
     plug(:put_secure_browser_headers)
+    plug(Rumbl.Auth, repo: Rumbl.Repo)
   end
 
   pipeline :api do
@@ -20,15 +21,26 @@ defmodule Rumbl.Router do
     # get("/users", UserController, :index)
     # get("/users/:id", UserController, :show)
     get("/", PageController, :index)
-    # resources("/users", UserController, only: [:index, :show, :new, :create])
-    get("/users", UserController, :index)
-    get("/users/:id/edit", UserController, :edit)
-    get("/users/new", UserController, :new)
-    get("/users/:id", UserController, :show)
-    post("/users", UserController, :create)
-    patch("/users/:id", UserController, :update)
-    put("/users/:id", UserController, :update)
-    delete("/users/:id", UserController, :delete)
+    resources("/users", UserController, only: [:index, :show, :new, :create])
+
+    resources("/sessions", SessionController, only: [:new, :create, :delete])
+
+    resources("/videos", VideoController)
+
+    # get("/users", UserController, :index)
+    # get("/users/:id/edit", UserController, :edit)
+    # get("/users/new", UserController, :new)
+    # get("/users/:id", UserController, :show)
+    # post("/users", UserController, :create)
+    # patch("/users/:id", UserController, :update)
+    # put("/users/:id", UserController, :update)
+    # delete("/users/:id", UserController, :delete)
+  end
+
+  scope "/manage", Rumbl do
+    pipe_through [:browser, :authenticate_user]
+
+    resources "/videos", VideoController
   end
 
   # Other scopes may use custom stacks.

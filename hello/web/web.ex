@@ -1,12 +1,12 @@
-defmodule Rumbl.Web do
+defmodule Hello.Web do
   @moduledoc """
   A module that keeps using definitions for controllers,
   views and so on.
 
   This can be used in your application as:
 
-      use Rumbl.Web, :controller
-      use Rumbl.Web, :view
+      use Hello.Web, :controller
+      use Hello.Web, :view
 
   The definitions below will be executed for every view,
   controller, etc, so keep them short and clean, focused
@@ -22,32 +22,20 @@ defmodule Rumbl.Web do
 
       import Ecto
       import Ecto.Changeset
-      import Ecto.Query, only: [from: 1, from: 2]
+      import Ecto.Query
     end
   end
 
   def controller do
-    # quote do
-    #   use Phoenix.Controller
-
-    #   alias Rumbl.Repo
-    #   import Ecto
-    #   import Ecto.Query
-
-    #   import Rumbl.Router.Helpers
-    #   import Rumbl.Gettext
-    # end
-
     quote do
       use Phoenix.Controller
 
-      alias Rumbl.Repo
+      alias Hello.Repo
       import Ecto
-      import Ecto.Query, only: [from: 1, from: 2]
+      import Ecto.Query
 
-      import Rumbl.Router.Helpers
-      import Rumbl.Gettext
-      import Rumbl.Auth, only: [authenticate_user: 2] # New import
+      import Hello.Router.Helpers
+      import Hello.Gettext
     end
   end
 
@@ -61,17 +49,15 @@ defmodule Rumbl.Web do
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
 
-      import Rumbl.Router.Helpers
-      import Rumbl.ErrorHelpers
-      import Rumbl.Gettext
+      import Hello.Router.Helpers
+      import Hello.ErrorHelpers
+      import Hello.Gettext
     end
   end
 
   def router do
     quote do
       use Phoenix.Router
-
-      import Rumbl.Auth, only: [authenticate_user: 2] # New import
     end
   end
 
@@ -79,10 +65,10 @@ defmodule Rumbl.Web do
     quote do
       use Phoenix.Channel
 
-      alias Rumbl.Repo
+      alias Hello.Repo
       import Ecto
       import Ecto.Query
-      import Rumbl.Gettext
+      import Hello.Gettext
     end
   end
 
